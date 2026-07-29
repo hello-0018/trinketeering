@@ -365,7 +365,7 @@ start with
 tags:Prestige
 on tick:
     if (chance(pow(shakiness, 1/4)))
-        summon shakePrompt
+        spawn shakePrompt
     end
 end
 
