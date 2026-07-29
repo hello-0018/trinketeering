@@ -392,7 +392,7 @@ on tick:
     if (chance(pow(rotativity, 1/4))) spawn rotatePrompt
 end
 passive:
-    if (not have snowglobe) multiply cost of snowglobe by 0
+    if (!(have snowglobe)) multiply cost of snowglobe by 0
 end
 
 *snowglobeShake
