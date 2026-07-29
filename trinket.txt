@@ -49,30 +49,6 @@ CSS
     justify-content:center;
 }
 
-#log {
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-
-    width: 300px;
-    height: 180px;
-
-    overflow-y: auto;
-
-    background: rgba(0,0,0,0.75);
-    border: 1px solid #666;
-    border-radius: 6px;
-
-    padding: 8px;
-
-    color: white;
-    font-size: 13px;
-}
-
-.log-entry {
-    margin-bottom: 4px;
-}
-
 .building {
     position: relative;
     display: flex;
@@ -254,7 +230,7 @@ Layout
 *main
   contains:res, buttons
   *res
-  contains:stats, pts, mats
+  contains:stats, pts, mats, Log
   class:fullWidth
   header:Resources
   *stats
@@ -346,10 +322,21 @@ text:[this]
 *snowglobe
 name:Snowglobe|Snowglobes
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+desc:Your first source of Coolness.<q>A beautiful still scene... quite literally frozen in time.</q>
+on click:
+    log <b>Snowglobe</b>
+    log Per Second:
+    log <.>Yields 1 Coolness
+    log On Shake:
+    log <.>[?(have snowglobeShake) | Yields 10 Coolness | <i>Requires [n:snowglobeShake]</i>]
+    log <.>[?(have snowglobeShake) | (1%) Yields 1 Snowflake | <i>Requires [n:snowglobeShake]</i>]
+end
 on tick:
     yield 1 coolness
+end
+on shake:
     if (have snowglobeShake)
-        yield 5 coolness
+        yield 10 coolness
         if (chance(1)) yield 1 snowflake
     end
 end
@@ -377,7 +364,7 @@ passive:grant 1 snowglobe
 
 *snowglobeShake
 name:Snowglobe Shake
-desc:Grants 10 Shakiness. Your Snowglobes grant 5 Coolness and have a 1% chance to grant a Snowflake <b>on shake</b>.
+desc:Grants 10 Shakiness. Snowglobes yield 10 Coolness and have a 1% chance to yield a Snowflake <b>on shake</b>.
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
 passive:grant 10 shakiness
 
@@ -386,7 +373,7 @@ Shinies
 *shakePrompt
 name:Shake!
 duration:5
-movement:wiggle
+movement:wiggle anywhere
 on click:
     log <b>Shake!</b>
     do shake with :Buildings:owned
