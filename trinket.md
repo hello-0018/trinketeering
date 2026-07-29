@@ -1,0 +1,395 @@
+Let's make a game!
+
+name: trinketeering
+created:7/28/2026
+version:0.0
+
+
+Settings
+
+building cost increase: 175%
+
+CSS
+  #game.filtersOn .thing-icon {
+    filter: none;
+}
+
+.thing
+{
+    display:inline-block;
+}
+
+#box-things-Buildings {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 72px);
+    gap: 8px;
+    align-content: start;
+}
+
+#box-things-Upgrades {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 68px);
+    gap: 4px;
+    align-content: start;
+}
+
+#box-things-Point {
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(6,64px);
+    gap:8px;
+    justify-content:center;
+}
+
+#box-things-Material {
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(6,64px);
+    gap:8px;
+    justify-content:center;
+}
+
+#log {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+
+    width: 300px;
+    height: 180px;
+
+    overflow-y: auto;
+
+    background: rgba(0,0,0,0.75);
+    border: 1px solid #666;
+    border-radius: 6px;
+
+    padding: 8px;
+
+    color: white;
+    font-size: 13px;
+}
+
+.log-entry {
+    margin-bottom: 4px;
+}
+
+.building {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width:64px;
+    height:64px;
+}
+
+.upgrade {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width:64px;
+    height:64px;
+}
+
+.res.tag-Point
+{
+	position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width:48px;
+    height:48px;
+}
+
+.res.tag-Material
+{
+	position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width:48px;
+    height:48px;
+}
+
+.res.tag-Point .thing-text {
+    position:absolute;
+    bottom:2px;
+    right:3px;
+
+    font-size:12px;
+    font-weight:bold;
+
+    color:white;
+    background:rgba(0,0,0,0.7);
+
+    padding:2px 5px;
+    border-radius:4px;
+
+    text-shadow:
+        1px 1px 0 black,
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black;
+
+    pointer-events:none;
+}
+
+.res.tag-Point .thing-icon
+{
+    width: 32px;
+    height: 32px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center !important;
+
+    margin:auto;
+
+    filter: none;
+}
+
+.res.tag-Material .thing-text {
+    position:absolute;
+    bottom:2px;
+    right:3px;
+
+    font-size:12px;
+    font-weight:bold;
+
+    color:white;
+    background:rgba(0,0,0,0.7);
+
+    padding:2px 5px;
+    border-radius:4px;
+
+    text-shadow:
+        1px 1px 0 black,
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black;
+
+    pointer-events:none;
+}
+
+.res.tag-Material .thing-icon
+{
+    width: 32px;
+    height: 32px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center !important;
+
+    margin:auto;
+
+    filter: none;
+}
+
+.building .thing-text {
+    position:absolute;
+    bottom:2px;
+    right:3px;
+
+    font-size:14px;
+    font-weight:bold;
+
+    color:white;
+    background:rgba(0,0,0,0.7);
+
+    padding:2px 5px;
+    border-radius:4px;
+
+    text-shadow:
+        1px 1px 0 black,
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black;
+
+    pointer-events:none;
+}
+
+.building .thing-icon
+{
+    width: 48px;
+    height: 48px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center !important;
+
+    margin:auto;
+
+    filter: none;
+}
+
+.upgrade .thing-icon
+{
+    width: 48px;
+    height: 48px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center !important;
+
+    margin:auto;
+
+    filter: none;
+}
+
+.building.notOwned {
+    filter: grayscale(100%);
+    opacity: 0.45;
+}
+
+.building.notOwned:hover {
+    opacity: 0.7;
+}
+
+Layout
+
+*main
+  contains:res, buttons
+  *res
+  contains:stats, pts, mats
+  class:fullWidth
+  header:Resources
+  *stats
+    contains:tag:Stat
+    class:fullWidth
+    header:Stats
+  *pts
+    contains:tag:Point
+    class:fullWidth
+    header:Points
+  *mats
+    contains:tag:Material
+    class:fullWidth
+    header:Materials
+  *buttons
+    contains:Buttons
+*store
+  contains:buildings, upgrades
+  *buildings
+    contains:Buildings
+    header:Trinkets
+    tooltip origin:left
+    icons:show
+  *upgrades
+    contains:Upgrades
+    header:Upgrades
+    costs:hide
+    names:hide
+
+Resources
+
+*shakiness
+name:Shakiness
+desc:Determines the chance a shake prompt pops up per second. (Currently: [pow(this,1/4)]%)
+tag:Stat
+
+*TEMPLATE
+text:[this]
+
+*zest
+name:Zest
+desc:Can be used to purchase things.
+tag:Point
+icon:https://i.ibb.co/f7JMhks/trinket-2-png.png
+
+*friendship
+name:Friendship
+desc:Can be used to purchase things.
+tag:Point
+icon:https://i.ibb.co/N6cTwscy/trinket-3-png.png
+
+*ingenuity
+name:Ingenuity
+desc:Can be used to purchase things.
+tag:Point
+icon:https://i.ibb.co/S2CrXF9/trinket-4-png.png
+
+*serenity
+name:Serenity
+desc:Can be used to purchase things.
+tag:Point
+icon:https://i.ibb.co/yBnVyS4p/trinket-5-png.png
+
+*coolness
+name:Coolness
+desc:Can be used to purchase things.
+tag:Point
+icon:https://i.ibb.co/YBVm85K4/trinket-6-png.png
+
+*style
+name:Style
+desc:Can be used to purchase things.
+tag:Point
+icon:https://i.ibb.co/qMfcdWqM/trinket-7-png.png
+
+*snowflake
+name:Snowflake|Snowflakes
+desc:A tiny crystallization.
+tag:Material
+text:[this]
+icon:https://i.ibb.co/twDckHwn/trinket-8-png.png
+
+Buildings
+
+*TEMPLATE
+no buy
+text:[this]
+
+*snowglobe
+name:Snowglobe|Snowglobes
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+on tick:
+    yield 1 coolness
+    if (have snowglobeShake)
+        yield 5 coolness
+        if (chance(1)) yield 1 snowflake
+    end
+end
+
+*boomerang
+name:Boomerang
+
+Upgrades
+
+*system
+hidden
+start with
+tags:Prestige
+on tick:
+    if (chance(pow(shakiness, 1/4)))
+        summon shakePrompt
+    end
+end
+
+*chillyStart
+name:Chilly Start
+desc:Starts you off with a Snowglobe.
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+passive:grant 1 snowglobe
+
+*snowglobeShake
+name:Snowglobe Shake
+desc:Grants 10 Shakiness. Your Snowglobes grant 5 Coolness and have a 1% chance to grant a Snowflake <b>on shake</b>.
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+passive:grant 10 shakiness
+
+Shinies
+
+*shakePrompt
+name:Shake!
+duration:5
+movement:wiggle
+on click:
+    log <b>Shake!</b>
+    do shake with :Buildings:owned
+    do shake with :Upgrades:owned
+    do shake with :Achievements:owned
+end
