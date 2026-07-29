@@ -328,14 +328,14 @@ on click:
     log Per Second:
     log <.>Yields 1 Coolness
     log On Shake:
-    log <.>[?(have snowglobeShake) | Yields 10 Coolness | <i>Requires [n:snowglobeShake]</i>]
-    log <.>[?(have snowglobeShake) | (1%) Yields 1 Snowflake | <i>Requires [n:snowglobeShake]</i>]
+    log <.>[?(snowglobeShake)|Yields 10 Coolness|<i>Requires [n:snowglobeShake]</i>]
+    log <.>[?(snowglobeShake)|(1%) Yields 1 Snowflake|<i>Requires [n:snowglobeShake]</i>]
 end
 on tick:
     yield 1 coolness
 end
 on shake:
-    if (have snowglobeShake)
+    if (snowglobeShake)
         yield 10 coolness
         if (chance(1)) yield 1 snowflake
     end
@@ -366,7 +366,9 @@ passive:grant 1 snowglobe
 name:Snowglobe Shake
 desc:Grants 10 Shakiness. Snowglobes yield 10 Coolness and have a 1% chance to yield a Snowflake <b>on shake</b>.
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+cost:100 coolness
 passive:grant 10 shakiness
+req:chillyStart
 
 Shinies
 
