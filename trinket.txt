@@ -8,6 +8,7 @@ version:0.0
 Settings
 
 building cost increase: 200%
+building cost refund: 0%
 
 CSS
   #game.filtersOn .thing-icon {
@@ -225,6 +226,29 @@ CSS
     opacity: 0.7;
 }
 
+.shiny {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shiny-text {
+    display: none;
+}
+
+.shiny-icon {
+    width: 48px;
+    height: 48px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center !important;
+}
+
+.shiny {
+    border: 2px solid red;
+}
+
 Layout
 
 *main
@@ -352,7 +376,7 @@ on click:
     log <.>[?(snowglobeShake)|(1%) Yields 1 Snowflake|<i>Requires [n:snowglobeShake]</i>]
 end
 on tick:
-    yield 1444444444444 coolness
+    yield 1 coolness
 end
 on shake:
     if (snowglobeShake)
@@ -365,6 +389,7 @@ end
 name:Spinning Top|Spinning Tops
 icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
 desc:Click for details<q>Its very movement keeps it alive.</q>
+cost:100 zest, 5 woodPiece
 req:spinPark
 on click:
     clear log
@@ -373,12 +398,14 @@ on click:
     log <.>Grants 5 Rotativity
     log On Rotate:
     log <.>Yields 30 Zest
+    log <.>[?(momentum)|(15%) Increases Rotativity by 1|<i>Requires [n:momentum]</i>]
 end
 passive:
     grant 5 rotativity
 end
 on rotate:
     yield 30 zest
+    if (momentum and chance(15))yield 1 rotativity
 end
 
 Upgrades
@@ -397,28 +424,56 @@ end
 
 *snowglobeShake
 name:Snowglobe Shake
-desc:Grants 10 Shakiness. Snowglobes yield 10 Coolness and have a 1% chance to yield a Snowflake <b>on shake</b>.
+desc:Grants 10 Shakiness. Snowglobes yield 10 Coolness and have a 1% chance to yield a Snowflake on shake.
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
 cost:100 coolness
 passive:grant 10 shakiness
 
+*snowfall
+name:Snowfall I
+desc:Snowflakes have a small chance to fall from the sky. When you catch one, Snowglobes yield 1 Coolness.
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+cost:300 coolness
+on tick:if (chance(0.1)) spawn snowflakeShiny
+
+*snowfall2
+name:Snowfall II
+desc:Snowflakes have a slightly higher likely of falling from the sky. When you catch one, Snowglobes yield 2 more Coolness.
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+cost:1000 coolness
+on tick:if (chance(0.05)) spawn snowflakeShiny
+req:snowfall
+
+*snowfall3
+name:Snowfall III
+desc:Snowflakes have a slightly higher chance of falling from the sky. When you catch one, Snowglobes yield 7 more Coolness.
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+cost:5000 coolness
+on tick:if (chance(0.05)) spawn snowflakeShiny
+req:snowfall2
+
 *spinPark
 name:spinPark
-desc:Grants 10 Rotativity. Grants a Spinning Top and unlocks new upgrades for it.
-icon:icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
+desc:Grants 10 Rotativity. Grants a [n:spinningTop] and unlocks new upgrades for it.
+icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
 cost:150 coolness
 passive:
     grant 10 rotativity
     grant 1 spinningTop
 end
 
+*momentum
+name:Momentum
+desc:[p:spinningTop] have a 15% chance to increase Rotativity by 1 on rotate.
+icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
+cost:100 zest
+
 Shinies
 
 *shakePrompt
 name:Shake
 duration:5
-icon:https://i.ibb.co/1t2BcNF4/trinket-12-png.png
-movement:wiggle anywhere
+icon:https://i.ibb.co/mFVdD4BQ/trinket-12-png-1.png
 on click:
     do shake with :Buildings:owned
     do shake with :Upgrades:owned
@@ -428,10 +483,12 @@ end
 *rotatePrompt
 name:Rotate
 duration:5
-icon:https://i.ibb.co/4gX4z8gX/trinket-13-png.png
+icon:https://i.ibb.co/kVHk5n5K/trinket-13-png-1.png
 movement:spinCW anywhere
 on click:
     do rotate with :Buildings:owned
     do rotate with :Upgrades:owned
     do rotate with :Achievements:owned
 end
+
+*snowflakeShiny
