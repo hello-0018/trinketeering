@@ -374,6 +374,9 @@ on click:
     log On Shake:
     log <.>[?(snowglobeShake)|Yields 10 Coolness|<i>Requires [n:snowglobeShake]</i>]
     log <.>[?(snowglobeShake)|(1%) Yields 1 Snowflake|<i>Requires [n:snowglobeShake]</i>]
+    log <.>[?(snowfall)|Yields 1 Coolness|<i>Requires [n:snowfall]</i>]
+    log <.>[?(snowfall2)|Yields 2 Coolness|<i>Requires [n:snowfall2]</i>]
+    log <.>[?(snowfall3)|Yields 7 Coolness|<i>Requires [n:snowfall3]</i>]
 end
 on tick:
     yield 1 coolness
@@ -383,6 +386,11 @@ on shake:
         yield 10 coolness
         if (chance(1)) yield 1 snowflake
     end
+end
+on snowflakeClicked:
+    if (snowfall) yield 1 coolness
+    if (snowfall2) yield 2 coolness
+    if (snowfall3) yield 7 coolness
 end
 
 *spinningTop
@@ -492,3 +500,12 @@ on click:
 end
 
 *snowflakeShiny
+duration:8
+icon:https://i.ibb.co/twDckHwn/trinket-8-png.png
+movement:onTop moveBottom
+on click:
+    yield 1 snowflake
+    do snowflakeClicked with :Buildings:owned
+    do snowflakeClicked with :Upgrades:owned
+    do snowflakeClicked with :Achievements:owned
+end
