@@ -400,7 +400,7 @@ name:Spinning Top|Spinning Tops
 icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
 desc:Click for details<q>Its very movement keeps it alive.</q>
 tags:listener
-req:spinPark or (this:max)>0
+req:spinPark or (spinningTop:max)>0
 on click:
     clear log
     log <b>Spinning Top</b>
