@@ -356,12 +356,12 @@ Buildings
 
 *TEMPLATE
 text:[this]
+no buy
 
 *snowglobe
 name:Snowglobe|Snowglobes
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
 desc:Click for details<q>A cozy scene quite literally frozen in time.</q>
-cost:100 coolness, 5 snowflake, 1 woodPiece, 3 glassShard
 on click:
     clear log
     log <b>Snowglobe</b>
@@ -393,23 +393,25 @@ end
 name:Spinning Top|Spinning Tops
 icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
 desc:Click for details<q>Its very movement keeps it alive.</q>
-cost:100 zest, 5 woodPiece
 req:spinPark
 on click:
     clear log
     log <b>Spinning Top</b>
     log Passive:
     log <.>Grants 5 Rotativity
+    log Per Second:
+    log <.>[?(momentum)|Yields 1 Zest|<i>Requires [n:momentum]</i>]
     log On Rotate:
     log <.>Yields 30 Zest
-    log <.>[?(momentum)|(15%) Increases Rotativity by 1|<i>Requires [n:momentum]</i>]
 end
 passive:
     grant 5 rotativity
 end
+on tick:
+    if (momentum) yield 1 zest
+end
 on triggerRotate:
     yield 30 zest
-    if (momentum and chance(15))yield 1 rotativity
 end
 
 Upgrades
@@ -426,12 +428,19 @@ passive:
     if (!(have snowglobe)) multiply cost of snowglobe by 0
 end
 
+*chillyStart
+name:Chilly start
+desc:Grants a [n:snowglobe] and unlocks new upgrades for it.
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+passive:grant 1 snowglobe
+
 *snowglobeShake
 name:Snowglobe Shake
 desc:Grants 10 Shakiness. Snowglobes yield 10 Coolness and have a 1% chance to yield a Snowflake on shake.
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
 cost:100 coolness
 passive:grant 10 shakiness
+req:chillyStart
 
 *snowfall
 name:Snowfall I
@@ -439,6 +448,7 @@ desc:Snowflakes have a small chance to fall from the sky. When you catch one, Sn
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
 cost:300 coolness
 on tick:if (chance(0.1)) spawn snowflakeShiny
+req:chillyStart
 
 *snowfall2
 name:Snowfall II
@@ -468,7 +478,7 @@ end
 
 *momentum
 name:Momentum
-desc:[p:spinningTop] have a 15% chance to increase Rotativity by 1 on rotate.
+desc:[p:spinningTop] yield 1 Zest per second.
 icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
 cost:100 zest
 
@@ -483,7 +493,6 @@ on click:
     toast Shake!
     do triggerShake with :Buildings:owned
     do triggerShake with :Upgrades:owned
-    do triggerShake with :Achievements:owned
 end
 
 *rotatePrompt
@@ -495,7 +504,6 @@ on click:
     toast Rotate!
     do triggerRotate with :Buildings:owned
     do triggerRotate with :Upgrades:owned
-    do triggerRotate with :Achievements:owned
 end
 
 *snowflakeShiny
