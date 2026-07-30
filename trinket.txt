@@ -245,10 +245,6 @@ CSS
     background-position: center !important;
 }
 
-.shiny {
-    border: 2px solid red;
-}
-
 Layout
 
 *main
@@ -482,7 +478,9 @@ Shinies
 name:Shake
 duration:5
 icon:https://i.ibb.co/mFVdD4BQ/trinket-12-png-1.png
+movement:wiggle anywhere
 on click:
+    toast Shake!
     do shake with :Buildings:owned
     do shake with :Upgrades:owned
     do shake with :Achievements:owned
@@ -494,6 +492,7 @@ duration:5
 icon:https://i.ibb.co/kVHk5n5K/trinket-13-png-1.png
 movement:spinCW anywhere
 on click:
+    toast Rotate!
     do rotate with :Buildings:owned
     do rotate with :Upgrades:owned
     do rotate with :Achievements:owned
