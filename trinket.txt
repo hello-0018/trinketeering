@@ -370,9 +370,9 @@ on click:
     log On Shake:
     log <.>[?(snowglobeShake)|Yields 10 Coolness|<i>Requires [n:snowglobeShake]</i>]
     log <.>[?(snowglobeShake)|(1%) Yields 1 Snowflake|<i>Requires [n:snowglobeShake]</i>]
-    log <.>[?(snowfall)|Yields 1 Coolness|<i>Requires [n:snowfall]</i>]
-    log <.>[?(snowfall2)|Yields 2 Coolness|<i>Requires [n:snowfall2]</i>]
-    log <.>[?(snowfall3)|Yields 7 Coolness|<i>Requires [n:snowfall3]</i>]
+    log <.>[?(snowfall)|Yields 1 Coolness|<#676767>Requires [n:snowfall]</#>]
+    log <.>[?(snowfall2)|Yields 2 Coolness|<#676767>Requires [n:snowfall2]</#>]
+    log <.>[?(snowfall3)|Yields 7 Coolness|<#676767>Requires [n:snowfall3]</#>]
 end
 on tick:
     yield 1 coolness
@@ -400,7 +400,7 @@ on click:
     log Passive:
     log <.>Grants 5 Rotativity
     log Per Second:
-    log <.>[?(momentum)|Yields 1 Zest|<i>Requires [n:momentum]</i>]
+    log <.>[?(momentum)|Yields 1 Zest|<#676767>Requires [n:momentum]</#>]
     log On Rotate:
     log <.>Yields 30 Zest
 end
@@ -490,9 +490,7 @@ duration:5
 icon:https://i.ibb.co/mFVdD4BQ/trinket-12-png-1.png
 movement:wiggle anywhere
 on click:
-    do triggerShake with :Buildings
-    do triggerShake with :Upgrades
-    do triggerShake with :Achievements
+    do triggerShake with :All
 end
 
 *rotatePrompt
@@ -501,9 +499,7 @@ duration:5
 icon:https://i.ibb.co/kVHk5n5K/trinket-13-png-1.png
 movement:spinCW anywhere
 on click:
-    do triggerRotate with :Buildings
-    do triggerRotate with :Upgrades
-    do triggerRotate with :Achievements
+    do triggerRotate with :All
 end
 
 *snowflakeShiny
@@ -512,7 +508,5 @@ icon:https://i.ibb.co/twDckHwn/trinket-8-png.png
 movement:onTop moveBottom bobHorizontal
 on click:
     yield 1 snowflake
-    do snowflakeClicked with :Buildings
-    do snowflakeClicked with :Upgrades
-    do snowflakeClicked with :Achievements
+    do snowflakeClicked with :All
 end
