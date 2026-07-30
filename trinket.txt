@@ -362,6 +362,7 @@ no buy
 name:Snowglobe|Snowglobes
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
 desc:Click for details<q>A cozy scene quite literally frozen in time.</q>
+tags:listener
 on click:
     clear log
     log <b>Snowglobe</b>
@@ -370,6 +371,8 @@ on click:
     log On Shake:
     log <.>[?(snowglobeShake)|Yields 10 Coolness|<i>Requires [n:snowglobeShake]</i>]
     log <.>[?(snowglobeShake)|(1%) Yields 1 Snowflake|<i>Requires [n:snowglobeShake]</i>]
+    log <.>[?(snowglobeShake)|(0.3%) Summon a falling snowflake|<i>Requires [n:shakePrecipitate]</i>]
+    log Collecting Snowflakes:
     log <.>[?(snowfall)|Yields 1 Coolness|<#676767>Requires [n:snowfall]</#>]
     log <.>[?(snowfall2)|Yields 2 Coolness|<#676767>Requires [n:snowfall2]</#>]
     log <.>[?(snowfall3)|Yields 7 Coolness|<#676767>Requires [n:snowfall3]</#>]
@@ -382,6 +385,9 @@ on triggerShake:
         yield 10 coolness
         if (chance(1)) yield 1 snowflake
     end
+    if (shakePrecipitate)
+        if (chance(0.3)) spawn snowflakeShiny
+    end
 end
 on snowflakeClicked:
     if (snowfall) yield 1 coolness
@@ -393,7 +399,8 @@ end
 name:Spinning Top|Spinning Tops
 icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
 desc:Click for details<q>Its very movement keeps it alive.</q>
-req:spinPark
+tags:listener
+req:spinPark or this:max>0
 on click:
     clear log
     log <b>Spinning Top</b>
@@ -466,6 +473,14 @@ cost:5000 coolness
 on tick:if (chance(0.05)) spawn snowflakeShiny
 req:snowfall2
 
+*shakePrecipitate
+name:Shake and Precipitate
+desc:Grants 8 Shakiness. Snowglobes have a 0.3% chance of summoning a falling snowflake on shake.
+icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
+cost:10000 coolness
+passive:grant 8 shakiness
+req:snowfall3
+
 *spinPark
 name:spinPark
 desc:Grants 10 Rotativity. Grants a [n:spinningTop] and unlocks new upgrades for it.
@@ -490,7 +505,7 @@ duration:5
 icon:https://i.ibb.co/mFVdD4BQ/trinket-12-png-1.png
 movement:wiggle anywhere
 on click:
-    do triggerShake with :All
+    do triggerShake with tag:listener
 end
 
 *rotatePrompt
@@ -499,7 +514,7 @@ duration:5
 icon:https://i.ibb.co/kVHk5n5K/trinket-13-png-1.png
 movement:spinCW anywhere
 on click:
-    do triggerRotate with :All
+    do triggerRotate with tag:listener
 end
 
 *snowflakeShiny
@@ -508,5 +523,5 @@ icon:https://i.ibb.co/twDckHwn/trinket-8-png.png
 movement:onTop moveBottom bobHorizontal
 on click:
     yield 1 snowflake
-    do snowflakeClicked with :All
+    do snowflakeClicked with tag:listener
 end
