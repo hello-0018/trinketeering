@@ -490,11 +490,9 @@ duration:5
 icon:https://i.ibb.co/mFVdD4BQ/trinket-12-png-1.png
 movement:wiggle anywhere
 on click:
-    toast Shake!
-    do triggerShake with :Buildings:owned
-    toast Shake!
-    do triggerShake with :Upgrades:owned
-    toast Shake!
+    do triggerShake with :Buildings
+    do triggerShake with :Upgrades
+    do triggerShake with :Achievements
 end
 
 *rotatePrompt
@@ -503,10 +501,9 @@ duration:5
 icon:https://i.ibb.co/kVHk5n5K/trinket-13-png-1.png
 movement:spinCW anywhere
 on click:
-    toast Rotate!
-    do triggerRotate with :Buildings:owned
-    do triggerRotate with :Upgrades:owned
-    do triggerRotate with :Achievements:owned
+    do triggerRotate with :Buildings
+    do triggerRotate with :Upgrades
+    do triggerRotate with :Achievements
 end
 
 *snowflakeShiny
@@ -515,7 +512,7 @@ icon:https://i.ibb.co/twDckHwn/trinket-8-png.png
 movement:onTop moveBottom bobHorizontal
 on click:
     yield 1 snowflake
-    do snowflakeClicked with :Buildings:owned
-    do snowflakeClicked with :Upgrades:owned
-    do snowflakeClicked with :Achievements:owned
+    do snowflakeClicked with :Buildings
+    do snowflakeClicked with :Upgrades
+    do snowflakeClicked with :Achievements
 end
