@@ -362,7 +362,7 @@ no buy
 name:Snowglobe|Snowglobes
 icon:https://i.ibb.co/tTtkyNS9/trinket-1-png.png
 desc:Click for details<q>A cozy scene quite literally frozen in time.</q>
-tags:listener
+tag:listener
 on click:
     clear log
     log <b>Snowglobe</b>
@@ -399,7 +399,7 @@ end
 name:Spinning Top|Spinning Tops
 icon:https://i.ibb.co/1YnwzQV5/trinket-9-png.png
 desc:Click for details<q>Its very movement keeps it alive.</q>
-tags:listener
+tag:listener
 req:spinPark or (spinningTop:max)>0
 on click:
     clear log
@@ -418,6 +418,7 @@ on tick:
     if (momentum) yield 1 zest
 end
 on triggerRotate:
+    toast Rotated
     yield 30 zest
 end
 
